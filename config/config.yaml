@@ -1,0 +1,110 @@
+# ======================================================================
+# 多生理信号驱动的心源性猝死智能预测预警与应急响应 Agent 系统
+# 全局配置文件
+# ----------------------------------------------------------------------
+# 使用方式：代码通过 `scd_agent.utils.config.load_config(path)` 读取，
+#           所有路径必须由用户提前下载数据后在此填写。
+# ======================================================================
+
+# ---------- 数据 ----------
+data:
+  # MIT-BIH Arrhythmia Database 本地解压目录（内含 100.dat / 100.hea / 100.atr 等）。
+  # 必须由用户提前从 PhysioNet 下载并解压到本地，代码不做在线下载。
+  mitbih_dir: "/path/to/mitbih"
+
+  # MIT-BIH 记录编号列表；留空则自动扫描目录中的 *.hea
+  mitbih_records: []
+
+  # 为了保证可运行性，可以只取前 N 条记录进行训练（0 表示不限制）
+  mitbih_max_records: 10
+
+  # 读取第几个通道（MIT-BIH 一般为 MLII 与 V5，0 代表 MLII）
+  channel: 0
+
+  # PTB-XL 本地目录（扩展用，可留空或保持默认）
+  ptbxl_dir: "/path/to/ptbxl"
+  ptbxl_csv: "ptbxl_database.csv"
+
+# ---------- 信号预处理 ----------
+preprocess:
+  sampling_rate: 360        # MIT-BIH 采样率为 360Hz
+  bandpass_low: 0.5
+  bandpass_high: 40.0
+  filter_order: 4
+  normalize: "zscore"       # "zscore" 或 "minmax"
+  # R 峰居中切分窗口（单位：采样点）
+  win_before: 144           # 约 0.4s
+  win_after: 216            # 约 0.6s；窗口总长 = 1.0s = 360 采样点
+
+# ---------- 标签映射 ----------
+# MIT-BIH 标注符号 → 5 类（AAMI 风格简化）
+labels:
+  classes: ["N", "S", "V", "F", "Q"]
+  symbol_map:
+    N: "N"
+    L: "N"
+    R: "N"
+    e: "N"
+    j: "N"
+    A: "S"
+    a: "S"
+    J: "S"
+    S: "S"
+    V: "V"
+    E: "V"
+    F: "F"
+    "/": "Q"
+    f: "Q"
+    Q: "Q"
+
+# ---------- 模型 ----------
+model:
+  in_channels: 1
+  num_classes: 5
+  conv_channels: [32, 64, 128]
+  kernel_size: 7
+  lstm_hidden: 64
+  lstm_layers: 2
+  bidirectional: true
+  dropout: 0.3
+
+# ---------- 训练 ----------
+training:
+  batch_size: 64
+  epochs: 5
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  val_split: 0.2
+  num_workers: 0
+  device: "auto"            # "auto" | "cpu" | "cuda"
+  seed: 42
+  # 为保证可运行性而做的采样限制；0 表示不限制
+  max_samples: 20000
+  # 类权重方案：inverse_freq（按类频率反比加权，缓解 MIT-BIH 极端不平衡）或 none
+  class_weight: "inverse_freq"
+  checkpoint_path: "checkpoints/cnn_lstm.pt"
+
+# ---------- 风险评估 ----------
+risk:
+  # 每个类别对应的风险权重，顺序与 labels.classes 保持一致
+  # N(正常)最低，V(室性)/F(融合)最高，可按需调整
+  class_weights:
+    N: 0.0
+    S: 0.4
+    V: 1.0
+    F: 0.8
+    Q: 0.3
+  thresholds:
+    low: 0.25               # < low           → low
+    medium: 0.60            # [low, medium)   → medium；>= medium → high
+
+# ---------- Agent 决策 ----------
+agent:
+  actions:
+    low: "normal_monitoring"
+    medium: "early_warning"
+    high: "emergency_response"
+  messages:
+    low: "生命体征稳定，继续常规监测。"
+    medium: "检测到可疑异常心律，建议关注并复核信号。"
+    high: "检测到高风险心律，立即通知急救并启动应急响应。"

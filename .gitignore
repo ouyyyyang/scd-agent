@@ -1,0 +1,29 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Project outputs
+checkpoints/
+logs/
+runs/
+*.pt
+*.pth
+
+# Local data directories (must NOT be committed)
+# 仅匹配仓库根目录下的 data/，避免误伤 src/scd_agent/data/ 源码目录
+/data/
+/datasets/
+/mitbih/
+/ptbxl/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store

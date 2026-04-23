@@ -1,0 +1,39 @@
+[project]
+name = "scd-agent"
+version = "0.1.0"
+description = "多生理信号驱动的心源性猝死智能预测预警与应急响应 Agent 系统"
+authors = [
+    { name = "oyzh", email = "oyzh0228@gmail.com" }
+]
+requires-python = ">=3.11,<3.14"
+readme = "README.md"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "wfdb>=4.1",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.4",
+    "torch>=2.2",
+    "tqdm>=4.66",
+]
+
+[project.scripts]
+scd-agent-train = "scd_agent.cli:train_entry"
+scd-agent-infer = "scd_agent.cli:infer_entry"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.2,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
