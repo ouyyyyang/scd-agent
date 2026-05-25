@@ -1,0 +1,56 @@
+<!--pages/profile/profile.wxml — 我的-->
+<scroll-view class="page" scroll-y type="list">
+
+  <!-- 头部 -->
+  <view class="head reveal">
+    <view class="avatar">♥</view>
+    <view class="head-info">
+      <text class="head-name">我的健康档案</text>
+      <text class="head-sub">{{sexOptions[form.sexIndex]}} · {{form.age || '--'}}岁{{bmi ? ' · BMI ' + bmi : ''}}</text>
+    </view>
+  </view>
+
+  <!-- 紧急求助 -->
+  <view class="sos reveal d1">
+    <view class="sos-title">紧急求助</view>
+    <view class="sos-btns">
+      <view class="sos-120" bindtap="call120">
+        <text class="sos-num">120</text><text class="sos-lb">急救电话</text>
+      </view>
+      <view class="sos-contact" bindtap="callDefault" wx:if="{{defaultContact}}">
+        <text class="sos-ic">☎</text>
+        <view><text class="sos-cname">{{defaultContact.name}}</text><text class="sos-clb">{{defaultContact.relation}} · 拨打</text></view>
+      </view>
+      <view class="sos-contact empty" bindtap="goContacts" wx:else>
+        <text class="sos-ic">＋</text><text class="sos-cname">添加联系人</text>
+      </view>
+    </view>
+    <view class="sos-manage" bindtap="goContacts">管理紧急联系人 ›</view>
+  </view>
+
+  <!-- 健康档案 -->
+  <view class="section-head reveal d2"><view class="bar"></view><text class="t-section">基础信息</text></view>
+  <view class="card form reveal d2">
+    <view class="row">
+      <text class="label">性别</text>
+      <picker class="val picker" mode="selector" range="{{sexOptions}}" value="{{form.sexIndex}}" data-field="sexIndex" bindchange="onPicker">{{sexOptions[form.sexIndex]}} ▾</picker>
+    </view>
+    <view class="row"><text class="label">年龄</text><input class="val" type="number" placeholder="岁" value="{{form.age}}" data-field="age" bindinput="onInput" /></view>
+    <view class="row"><text class="label">身高</text><input class="val" type="number" placeholder="cm" value="{{form.height}}" data-field="height" bindinput="onInput" /></view>
+    <view class="row"><text class="label">体重</text><input class="val" type="digit" placeholder="kg" value="{{form.weight}}" data-field="weight" bindinput="onInput" /></view>
+  </view>
+
+  <view class="section-head reveal d3"><view class="bar"></view><text class="t-section">健康背景</text></view>
+  <view class="card form reveal d3">
+    <view class="row"><text class="label">高血压</text><switch checked="{{form.hypertension}}" color="#e23a52" data-field="hypertension" bindchange="onSwitch" /></view>
+    <view class="row"><text class="label">糖尿病</text><switch checked="{{form.diabetes}}" color="#e23a52" data-field="diabetes" bindchange="onSwitch" /></view>
+    <view class="row"><text class="label">吸烟</text><switch checked="{{form.smoking}}" color="#e23a52" data-field="smoking" bindchange="onSwitch" /></view>
+    <view class="row"><text class="label">心血管家族史</text><switch checked="{{form.familyHistory}}" color="#e23a52" data-field="familyHistory" bindchange="onSwitch" /></view>
+    <view class="row col"><text class="label">当前用药</text><input class="val full" placeholder="如：氨氯地平 5mg/日（多个用、隔开）" value="{{form.meds}}" data-field="meds" bindinput="onInput" /></view>
+  </view>
+
+  <button class="btn-primary save-btn" bindtap="save">保存档案</button>
+  <button class="btn-ghost entry-btn" bindtap="goEntry">＋ 录入体征数据</button>
+  <view class="t-caption foot">健康档案用于让 AI 评估更贴合你的情况。数据仅保存在本机。</view>
+
+</scroll-view>

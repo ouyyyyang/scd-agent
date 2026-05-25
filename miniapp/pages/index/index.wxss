@@ -1,0 +1,141 @@
+/**pages/index/index.wxss**/
+.page { min-height: 100vh; box-sizing: border-box; padding: 24rpx 28rpx 60rpx; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  border-radius: var(--r-lg);
+  padding: 44rpx 40rpx 40rpx;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: var(--sh-brand);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #ff6076 0%, #e23a52 48%, #a30f27 100%);
+}
+.hero-bg::after {
+  content: ''; position: absolute; right: -80rpx; top: -120rpx;
+  width: 360rpx; height: 360rpx; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.22), rgba(255,255,255,0));
+}
+.hero-top, .hero-main, .hero-sub { position: relative; z-index: 1; }
+.hero-top { display: flex; align-items: center; justify-content: space-between; }
+.hero-label { font-size: 26rpx; opacity: 0.92; }
+.risk-chip {
+  font-size: 24rpx; font-weight: 600; padding: 8rpx 22rpx; border-radius: 999rpx;
+  background: rgba(255,255,255,0.22); backdrop-filter: blur(4px);
+}
+.risk-chip.loading { opacity: 0.8; }
+.hero-main { display: flex; align-items: baseline; margin-top: 24rpx; }
+.hero-num { font-size: 128rpx; font-weight: 800; letter-spacing: -3rpx; line-height: 1; }
+.hero-unit { font-size: 34rpx; font-weight: 600; margin-left: 14rpx; opacity: 0.9; }
+.hero-sub { display: block; margin-top: 16rpx; font-size: 26rpx; opacity: 0.92; line-height: 1.5; }
+
+/* ---------- 异常条 ---------- */
+.alert-bar {
+  display: flex; align-items: flex-start; gap: 16rpx;
+  margin-top: 24rpx; padding: 24rpx 28rpx;
+  background: #fff4f2; border: 2rpx solid #ffd9d2; border-radius: var(--r-md);
+}
+.alert-ic {
+  flex: none; width: 40rpx; height: 40rpx; border-radius: 50%;
+  background: var(--bad); color: #fff; font-weight: 800;
+  text-align: center; line-height: 40rpx; font-size: 28rpx;
+}
+.alert-list { display: flex; flex-direction: column; gap: 4rpx; }
+.alert-txt { font-size: 26rpx; color: #c0392b; }
+
+/* ---------- 心脏指标网格 ---------- */
+.grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.metric {
+  width: 48.5%; box-sizing: border-box;
+  background: var(--card); border-radius: var(--r-md);
+  padding: 28rpx 28rpx 26rpx; margin-bottom: 20rpx; box-shadow: var(--sh-sm);
+}
+.m-top { display: flex; align-items: center; }
+.m-icon { font-size: 30rpx; margin-right: 10rpx; }
+.m-name { font-size: 24rpx; color: var(--ink-3); flex: 1; }
+.dot { width: 16rpx; height: 16rpx; border-radius: 50%; }
+.dot.s-good { background: var(--good); } .dot.s-warn { background: var(--warn); } .dot.s-bad { background: var(--bad); }
+.m-value { margin-top: 14rpx; font-size: 60rpx; font-weight: 800; line-height: 1; letter-spacing: -1rpx; }
+.m-unit { font-size: 24rpx; font-weight: 500; color: var(--ink-3); margin-left: 8rpx; }
+.m-bar { margin-top: 18rpx; height: 8rpx; border-radius: 8rpx; background: #f0f1f3; overflow: hidden; }
+.m-bar-fill { height: 100%; border-radius: 8rpx; }
+.m-bar-fill.s-good { width: 100%; } .m-bar-fill.s-warn { width: 58%; opacity: .9; } .m-bar-fill.s-bad { width: 32%; }
+
+/* ---------- 辅助指标 ---------- */
+.aux-row { display: flex; gap: 20rpx; }
+.aux {
+  flex: 1; display: flex; align-items: center; gap: 16rpx;
+  background: var(--card); border-radius: var(--r-md); padding: 24rpx; box-shadow: var(--sh-sm);
+}
+.aux-ic { font-size: 40rpx; }
+.aux-info { display: flex; flex-direction: column; }
+.aux-name { font-size: 22rpx; color: var(--ink-3); }
+.aux-val { font-size: 34rpx; font-weight: 700; }
+
+/* ---------- 卡片通用 ---------- */
+.card { margin-bottom: 22rpx; }
+.card-title { display: block; font-size: 28rpx; font-weight: 700; margin-bottom: 20rpx; }
+
+/* 建议 */
+.tips { padding-top: 28rpx; padding-bottom: 28rpx; }
+.tip-item { display: flex; align-items: flex-start; gap: 16rpx; padding: 12rpx 0; }
+.tip-dot {
+  flex: none; width: 34rpx; height: 34rpx; border-radius: 50%; text-align: center;
+  line-height: 34rpx; font-size: 22rpx; color: #fff; background: var(--good);
+}
+.tip-dot.long { background: var(--brand); }
+.tip-text { flex: 1; font-size: 27rpx; color: var(--ink-2); line-height: 1.55; }
+
+/* 风险环 */
+.risk-row { display: flex; align-items: center; gap: 28rpx; }
+.risk-ring {
+  flex: none; width: 150rpx; height: 150rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 46rpx; font-weight: 800; color: #fff;
+}
+.risk-ring.low  { background: linear-gradient(135deg, #2fe39a, #16c47f); }
+.risk-ring.mid  { background: linear-gradient(135deg, #ffc04d, #ff9f0a); }
+.risk-ring.high { background: linear-gradient(135deg, #ff6f64, #ff453a); }
+.ring-pct { font-size: 24rpx; font-weight: 600; margin-left: 2rpx; }
+.risk-meta { flex: 1; display: flex; flex-direction: column; gap: 10rpx; }
+.risk-lv { font-size: 38rpx; font-weight: 800; }
+.risk-lv.low { color: var(--good); } .risk-lv.mid { color: var(--warn); } .risk-lv.high { color: var(--bad); }
+
+/* 就医建议分级 */
+.care {
+  display: flex; align-items: center; gap: 20rpx;
+  padding: 28rpx 32rpx; border-radius: var(--r-md); margin-bottom: 22rpx;
+}
+.care-observe { background: #eafaf2; border: 2rpx solid #b9ecd2; }
+.care-consult { background: #fff6e8; border: 2rpx solid #ffe0a8; }
+.care-urgent  { background: #fff1ef; border: 2rpx solid #ffc9c0; }
+.care-badge {
+  flex: none; font-size: 26rpx; font-weight: 800; color: #fff;
+  padding: 10rpx 24rpx; border-radius: 999rpx;
+}
+.care-observe .care-badge { background: var(--good); }
+.care-consult .care-badge { background: var(--warn); }
+.care-urgent .care-badge  { background: var(--bad); }
+.care-note { flex: 1; font-size: 26rpx; line-height: 1.5; color: var(--ink-2); }
+
+/* 因素 */
+.factor { padding: 18rpx 0; border-top: 2rpx solid var(--line); }
+.factor:first-of-type { border-top: none; padding-top: 0; }
+.factor-head { display: flex; align-items: center; justify-content: space-between; }
+.factor-name { font-size: 28rpx; font-weight: 600; }
+.factor-level { font-size: 22rpx; padding: 4rpx 18rpx; border-radius: 999rpx; color: #fff; }
+.lv-high { background: var(--bad); } .lv-mid { background: var(--warn); } .lv-low { background: var(--good); }
+.factor-impact { display: block; margin-top: 8rpx; font-size: 25rpx; color: var(--ink-3); line-height: 1.5; }
+
+/* 状态 */
+.state { display: flex; flex-direction: column; align-items: center; padding: 56rpx; gap: 24rpx; }
+.spinner { width: 64rpx; height: 64rpx; border: 6rpx solid #f0f1f3; border-top-color: var(--brand); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.err { color: var(--bad); text-align: center; }
+.state-btn { width: 50%; height: 80rpx; line-height: 80rpx; }
+
+.entry-btn { margin: 32rpx 0 0; height: 96rpx; line-height: 96rpx; }
+.foot { display: block; margin-top: 26rpx; text-align: center; }

@@ -1,0 +1,15 @@
+/**pages/entry/entry.wxss**/
+.page { min-height: 100vh; box-sizing: border-box; padding: 28rpx 28rpx 60rpx; }
+
+.intro { padding: 12rpx 8rpx 8rpx; display: flex; flex-direction: column; gap: 12rpx; }
+
+.form { padding: 8rpx 32rpx; }
+.row { display: flex; align-items: center; justify-content: space-between; min-height: 100rpx; border-top: 2rpx solid var(--line); }
+.row:first-child { border-top: none; }
+.label { font-size: 29rpx; }
+.vbox { display: flex; align-items: baseline; gap: 10rpx; }
+.val { width: 200rpx; text-align: right; font-size: 32rpx; font-weight: 600; }
+.picker { width: auto; color: #576b95; font-weight: 400; }
+.unit { font-size: 24rpx; color: var(--ink-3); width: 70rpx; }
+
+.save-btn { margin: 36rpx 0 0; height: 96rpx; line-height: 96rpx; }

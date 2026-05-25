@@ -1,0 +1,116 @@
+<!--pages/index/index.wxml — 首页-->
+<scroll-view class="page" scroll-y type="list">
+
+  <!-- Hero：今日心脏概览 -->
+  <view class="hero reveal" wx:if="{{hero}}">
+    <view class="hero-bg"></view>
+    <view class="hero-top">
+      <text class="hero-label">我的心脏 · {{hero.date}}</text>
+      <view class="risk-chip {{result.levelClass}}" wx:if="{{result}}">{{result.riskLevel}}风险</view>
+      <view class="risk-chip loading" wx:elif="{{loading}}">评估中…</view>
+    </view>
+    <view class="hero-main">
+      <text class="hero-num">{{hero.hr}}</text>
+      <text class="hero-unit">bpm</text>
+    </view>
+    <text class="hero-sub">静息心率 · {{result.summary || '正在分析你的心脏数据…'}}</text>
+  </view>
+
+  <!-- 异常提示 -->
+  <view class="alert-bar reveal d1" wx:if="{{alerts.length}}">
+    <text class="alert-ic">!</text>
+    <view class="alert-list">
+      <text wx:for="{{alerts}}" wx:key="*this" class="alert-txt">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 心脏指标 -->
+  <view class="section-head reveal d1"><view class="bar"></view><text class="t-section">心脏指标</text></view>
+  <view class="grid">
+    <view class="metric reveal d2" wx:for="{{primaryCards}}" wx:key="key">
+      <view class="m-top">
+        <text class="m-icon" style="color:{{item.accent}}">{{item.icon}}</text>
+        <text class="m-name">{{item.name}}</text>
+        <text class="dot s-{{item.status}}"></text>
+      </view>
+      <view class="m-value">{{item.value}}<text class="m-unit">{{item.unit}}</text></view>
+      <view class="m-bar"><view class="m-bar-fill s-{{item.status}}" style="background:{{item.accent}}"></view></view>
+    </view>
+  </view>
+
+  <!-- 辅助指标 -->
+  <block wx:if="{{auxCards.length}}">
+    <view class="section-head reveal d2"><view class="bar"></view><text class="t-section">生活方式</text></view>
+    <view class="aux-row reveal d3">
+      <view class="aux" wx:for="{{auxCards}}" wx:key="key">
+        <text class="aux-ic" style="color:{{item.accent}}">{{item.icon}}</text>
+        <view class="aux-info">
+          <text class="aux-name">{{item.name}}</text>
+          <text class="aux-val">{{item.value}} {{item.unit}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 短期建议 -->
+  <block wx:if="{{result.shortTermTips.length}}">
+    <view class="section-head reveal"><view class="bar"></view><text class="t-section">今天可以做</text></view>
+    <view class="card tips reveal">
+      <view class="tip-item" wx:for="{{result.shortTermTips}}" wx:key="*this">
+        <text class="tip-dot">✓</text><text class="tip-text">{{item}}</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 风险评估 -->
+  <view class="section-head reveal"><view class="bar"></view><text class="t-section">AI 风险评估</text></view>
+
+  <view wx:if="{{loading}}" class="card state">
+    <view class="spinner"></view>
+    <text class="t-body">AI 正在分析你的心脏数据…</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="card state">
+    <text class="t-body err">{{error}}</text>
+    <button class="btn-ghost state-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <block wx:elif="{{result}}">
+    <view class="card reveal">
+      <view class="risk-row">
+        <view class="risk-ring {{result.levelClass}}">{{result.riskScorePercent}}<text class="ring-pct">%</text></view>
+        <view class="risk-meta">
+          <text class="risk-lv {{result.levelClass}}">{{result.riskLevel}}风险</text>
+          <text class="t-body">{{result.summary}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="care care-{{result.careClass}} reveal" wx:if="{{result.careLevel}}">
+      <view class="care-badge">{{result.careLevel}}</view>
+      <text class="care-note">{{result.careNote}}</text>
+    </view>
+
+    <view class="card reveal" wx:if="{{result.factors.length}}">
+      <text class="card-title">主要影响因素</text>
+      <view class="factor" wx:for="{{result.factors}}" wx:key="name">
+        <view class="factor-head">
+          <text class="factor-name">{{item.name}}</text>
+          <text class="factor-level lv-{{item.levelClass}}">{{item.level}}</text>
+        </view>
+        <text class="factor-impact">{{item.impact}}</text>
+      </view>
+    </view>
+
+    <view class="card reveal" wx:if="{{result.longTermTips.length}}">
+      <text class="card-title">长期管理</text>
+      <view class="tip-item" wx:for="{{result.longTermTips}}" wx:key="*this">
+        <text class="tip-dot long">◆</text><text class="tip-text">{{item}}</text>
+      </view>
+    </view>
+  </block>
+
+  <button class="btn-primary entry-btn" bindtap="goEntry">＋ 录入体征数据</button>
+  <view class="t-caption foot">本结果由 AI 生成，仅供参考，不能替代医生诊断。</view>
+
+</scroll-view>

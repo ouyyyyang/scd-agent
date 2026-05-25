@@ -1,0 +1,90 @@
+/**app.wxss — 全局设计系统**/
+page {
+  /* 配色：深玫红主色 + 鲜明指标色（统一、有主调，非平淡均摊） */
+  --brand: #e23a52;
+  --brand-deep: #b3122b;
+  --brand-soft: #fff0f1;
+  --ink: #15171c;
+  --ink-2: #5b616e;
+  --ink-3: #9aa0ab;
+  --line: #eef0f3;
+  --card: #ffffff;
+  --bg: #f5f6f8;
+
+  --good: #16c47f;
+  --warn: #ff9f0a;
+  --bad: #ff453a;
+
+  --r-lg: 32rpx;
+  --r-md: 24rpx;
+  --r-sm: 16rpx;
+  --sh-sm: 0 4rpx 16rpx rgba(20, 23, 33, 0.05);
+  --sh-md: 0 12rpx 36rpx rgba(20, 23, 33, 0.10);
+  --sh-brand: 0 16rpx 36rpx rgba(178, 18, 43, 0.28);
+
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 28rpx;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 文本层次 */
+.t-display { font-size: 76rpx; font-weight: 800; letter-spacing: -1rpx; line-height: 1; }
+.t-title   { font-size: 40rpx; font-weight: 700; letter-spacing: -0.5rpx; }
+.t-section { font-size: 32rpx; font-weight: 700; color: var(--ink); }
+.t-body    { font-size: 28rpx; color: var(--ink-2); line-height: 1.6; }
+.t-caption { font-size: 24rpx; color: var(--ink-3); }
+
+/* 通用卡片 */
+.card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  padding: 36rpx;
+  box-shadow: var(--sh-sm);
+}
+
+/* 章节标题 */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  margin: 40rpx 8rpx 22rpx;
+}
+.section-head .bar {
+  width: 8rpx;
+  height: 32rpx;
+  border-radius: 8rpx;
+  background: var(--brand);
+}
+
+/* 按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #ff5d72, var(--brand-deep));
+  color: #fff;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  box-shadow: var(--sh-brand);
+}
+.btn-primary[disabled] { opacity: 0.5; }
+.btn-ghost {
+  background: var(--card);
+  color: var(--brand);
+  border: 2rpx solid rgba(226, 58, 82, 0.35);
+  border-radius: 999rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+button::after { border: none; }
+
+/* 入场动效：错落淡入上移 */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.d1 { animation-delay: 0.04s; }
+.d2 { animation-delay: 0.10s; }
+.d3 { animation-delay: 0.16s; }
+.d4 { animation-delay: 0.22s; }
+.d5 { animation-delay: 0.28s; }

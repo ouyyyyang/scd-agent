@@ -1,0 +1,45 @@
+/**pages/qa/qa.wxss**/
+.page { display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+
+.msgs { flex: 1; padding: 28rpx; box-sizing: border-box; }
+
+.msg { display: flex; align-items: flex-end; gap: 14rpx; margin-bottom: 26rpx; }
+.msg.user { flex-direction: row-reverse; }
+.avatar {
+  flex: none; width: 60rpx; height: 60rpx; border-radius: 50%;
+  background: linear-gradient(135deg, #ff6076, #b3122b); color: #fff;
+  font-size: 30rpx; text-align: center; line-height: 60rpx;
+}
+.bubble {
+  max-width: 74%; padding: 22rpx 26rpx; font-size: 28rpx; line-height: 1.55;
+  border-radius: 28rpx; word-break: break-word;
+}
+.bubble.assistant { background: #fff; color: var(--ink); border-bottom-left-radius: 8rpx; box-shadow: var(--sh-sm); }
+.bubble.user { background: linear-gradient(135deg, #ff5d72, var(--brand-deep)); color: #fff; border-bottom-right-radius: 8rpx; }
+
+/* 输入中动画 */
+.typing { display: flex; gap: 10rpx; align-items: center; }
+.typing .d { width: 12rpx; height: 12rpx; border-radius: 50%; background: #c7ccd4; animation: blink 1.2s infinite; }
+.typing .d:nth-child(2) { animation-delay: 0.2s; }
+.typing .d:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%, 60%, 100% { opacity: 0.3; } 30% { opacity: 1; } }
+
+/* 建议 */
+.suggest { display: flex; flex-wrap: wrap; gap: 16rpx; margin-top: 8rpx; }
+.chip {
+  font-size: 25rpx; color: var(--brand); background: var(--brand-soft);
+  padding: 14rpx 26rpx; border-radius: 999rpx;
+}
+
+/* 输入栏 */
+.inputbar {
+  display: flex; align-items: center; gap: 16rpx;
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: #fff; border-top: 2rpx solid var(--line);
+}
+.ipt { flex: 1; height: 76rpx; padding: 0 28rpx; background: var(--bg); border-radius: 999rpx; font-size: 28rpx; }
+.send {
+  flex: none; height: 76rpx; line-height: 76rpx; padding: 0 36rpx; border-radius: 999rpx;
+  font-size: 28rpx; font-weight: 600; color: #fff; background: #c7ccd4;
+}
+.send.on { background: linear-gradient(135deg, #ff5d72, var(--brand-deep)); }

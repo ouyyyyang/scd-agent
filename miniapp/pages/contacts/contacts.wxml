@@ -1,0 +1,46 @@
+<!--pages/contacts/contacts.wxml — 紧急联系人-->
+<scroll-view class="page" scroll-y type="list">
+
+  <!-- 一键 120 -->
+  <view class="sos120 reveal" bindtap="call120">
+    <view class="sos120-l"><text class="sos120-num">120</text><text class="sos120-lb">一键拨打急救电话</text></view>
+    <text class="sos120-ic">☎</text>
+  </view>
+
+  <view class="section-head reveal d1"><view class="bar"></view><text class="t-section">我的紧急联系人</text></view>
+
+  <view class="card empty reveal d1" wx:if="{{!contacts.length}}">
+    <text class="t-body">还没有紧急联系人，添加后可在紧急情况一键拨打。</text>
+  </view>
+
+  <view class="contact reveal d1" wx:for="{{contacts}}" wx:key="id">
+    <view class="c-avatar">{{item.initial}}</view>
+    <view class="c-info" bindtap="setDefault" data-id="{{item.id}}">
+      <view class="c-name-row">
+        <text class="c-name">{{item.name}}</text>
+        <text class="c-default" wx:if="{{item.isDefault}}">默认</text>
+      </view>
+      <text class="c-meta">{{item.relation}} · {{item.phone}}</text>
+    </view>
+    <view class="c-call" catchtap="call" data-phone="{{item.phone}}">拨打</view>
+    <view class="c-del" catchtap="remove" data-id="{{item.id}}">✕</view>
+  </view>
+
+  <button class="btn-primary add-btn" bindtap="openForm">＋ 添加联系人</button>
+  <view class="t-caption foot">点击联系人卡片可设为默认（首页/我的页快速拨打）。</view>
+
+  <!-- 新增弹层 -->
+  <view class="mask" wx:if="{{showForm}}" bindtap="closeForm">
+    <view class="sheet reveal" catchtap="noop">
+      <text class="sheet-title">添加紧急联系人</text>
+      <view class="frow"><text class="flabel">姓名</text><input class="finput" placeholder="如：母亲" value="{{form.name}}" data-field="name" bindinput="onInput" /></view>
+      <view class="frow"><text class="flabel">关系</text><input class="finput" placeholder="如：家人 / 医生" value="{{form.relation}}" data-field="relation" bindinput="onInput" /></view>
+      <view class="frow"><text class="flabel">电话</text><input class="finput" type="number" placeholder="手机号码" value="{{form.phone}}" data-field="phone" bindinput="onInput" /></view>
+      <view class="sheet-btns">
+        <button class="btn-ghost half" bindtap="closeForm">取消</button>
+        <button class="btn-primary half" bindtap="add">保存</button>
+      </view>
+    </view>
+  </view>
+
+</scroll-view>

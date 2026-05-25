@@ -1,0 +1,52 @@
+/**pages/profile/profile.wxss**/
+.page { min-height: 100vh; box-sizing: border-box; padding: 28rpx 28rpx 60rpx; }
+
+/* 头部 */
+.head { display: flex; align-items: center; gap: 24rpx; padding: 16rpx 8rpx 8rpx; }
+.avatar {
+  width: 110rpx; height: 110rpx; border-radius: 50%;
+  background: linear-gradient(135deg, #ff6076, #b3122b); color: #fff;
+  font-size: 56rpx; text-align: center; line-height: 110rpx; box-shadow: var(--sh-brand);
+}
+.head-info { display: flex; flex-direction: column; gap: 8rpx; }
+.head-name { font-size: 38rpx; font-weight: 800; }
+.head-sub { font-size: 26rpx; color: var(--ink-3); }
+
+/* 紧急求助 */
+.sos {
+  margin-top: 28rpx; padding: 32rpx; border-radius: var(--r-lg);
+  background: linear-gradient(135deg, #2a2d36, #15171c); color: #fff; box-shadow: var(--sh-md);
+}
+.sos-title { font-size: 28rpx; font-weight: 700; opacity: 0.85; margin-bottom: 22rpx; }
+.sos-btns { display: flex; gap: 20rpx; }
+.sos-120 {
+  flex: none; width: 200rpx; height: 150rpx; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #ff5d72, #e2152f);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6rpx;
+  box-shadow: var(--sh-brand);
+}
+.sos-num { font-size: 56rpx; font-weight: 800; letter-spacing: 2rpx; }
+.sos-lb { font-size: 22rpx; opacity: 0.9; }
+.sos-contact {
+  flex: 1; border-radius: var(--r-md); background: rgba(255,255,255,0.10);
+  display: flex; align-items: center; gap: 16rpx; padding: 0 28rpx;
+}
+.sos-contact.empty { justify-content: center; color: rgba(255,255,255,0.7); }
+.sos-ic { font-size: 44rpx; }
+.sos-cname { font-size: 30rpx; font-weight: 700; display: block; }
+.sos-clb { font-size: 22rpx; opacity: 0.7; }
+.sos-manage { margin-top: 24rpx; font-size: 25rpx; opacity: 0.8; }
+
+/* 表单 */
+.form { padding: 8rpx 32rpx; }
+.row { display: flex; align-items: center; justify-content: space-between; min-height: 100rpx; border-top: 2rpx solid var(--line); }
+.row:first-child { border-top: none; }
+.row.col { flex-direction: column; align-items: stretch; gap: 14rpx; padding: 26rpx 0; }
+.label { font-size: 29rpx; }
+.val { flex: 1; margin-left: 24rpx; text-align: right; font-size: 29rpx; }
+.val.full { text-align: left; margin-left: 0; }
+.picker { color: #576b95; }
+
+.save-btn { margin: 36rpx 0 0; height: 96rpx; line-height: 96rpx; }
+.entry-btn { margin: 22rpx 0 0; height: 92rpx; line-height: 92rpx; }
+.foot { display: block; margin-top: 26rpx; text-align: center; }

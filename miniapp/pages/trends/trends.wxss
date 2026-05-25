@@ -1,0 +1,54 @@
+/**pages/trends/trends.wxss**/
+.page { min-height: 100vh; box-sizing: border-box; padding: 28rpx 28rpx 60rpx; }
+
+/* 指标切换 */
+.tabs { white-space: nowrap; margin-bottom: 24rpx; }
+.tab {
+  display: inline-block; padding: 14rpx 34rpx; margin-right: 16rpx;
+  border-radius: 999rpx; font-size: 27rpx; color: var(--ink-2);
+  background: var(--card); box-shadow: var(--sh-sm);
+}
+.tab.on { color: #fff; background: linear-gradient(135deg, #ff5d72, var(--brand-deep)); box-shadow: var(--sh-brand); }
+
+/* 趋势图卡 */
+.chart-card { padding: 32rpx 28rpx; }
+.stat-row { display: flex; gap: 40rpx; margin-bottom: 12rpx; }
+.stat { display: flex; flex-direction: column; }
+.stat-num { font-size: 44rpx; font-weight: 800; letter-spacing: -1rpx; }
+.stat-lb { font-size: 22rpx; color: var(--ink-3); margin-top: 4rpx; }
+.chart { width: 100%; height: 320rpx; }
+
+/* AI 趋势 */
+.trend-head { display: flex; flex-direction: column; gap: 14rpx; }
+.trend-tag { align-self: flex-start; font-size: 28rpx; font-weight: 700; padding: 8rpx 28rpx; border-radius: 999rpx; color: #fff; }
+.trend-tag.good { background: var(--good); } .trend-tag.mid { background: var(--warn); } .trend-tag.bad { background: var(--bad); }
+.hl { display: flex; align-items: center; gap: 16rpx; padding: 18rpx 0; border-top: 2rpx solid var(--line); margin-top: 18rpx; }
+.hl-name { font-size: 27rpx; font-weight: 600; min-width: 150rpx; }
+.hl-dir { font-size: 23rpx; padding: 3rpx 16rpx; border-radius: 999rpx; color: #fff; background: var(--ink-3); }
+.dir-up { background: var(--bad); } .dir-down { background: var(--good); } .dir-flat { background: var(--ink-3); }
+.hl-note { flex: 1; font-size: 24rpx; color: var(--ink-3); }
+
+.card-title { display: block; font-size: 28rpx; font-weight: 700; margin-bottom: 18rpx; }
+.tip-item { display: flex; align-items: flex-start; gap: 16rpx; padding: 12rpx 0; }
+.tip-dot { flex: none; width: 34rpx; height: 34rpx; border-radius: 50%; text-align: center; line-height: 34rpx; font-size: 20rpx; color: #fff; background: var(--brand); }
+.tip-text { flex: 1; font-size: 27rpx; color: var(--ink-2); line-height: 1.55; }
+.gen-btn { height: 92rpx; line-height: 92rpx; margin: 4rpx 0 8rpx; }
+
+/* 历史 */
+.hist-card { padding: 8rpx 32rpx; }
+.hist { display: flex; align-items: center; justify-content: space-between; padding: 26rpx 0; border-top: 2rpx solid var(--line); }
+.hist:first-child { border-top: none; }
+.hist-l { display: flex; flex-direction: column; gap: 6rpx; }
+.hist-date { font-size: 28rpx; font-weight: 600; }
+.hist-alert { font-size: 22rpx; color: var(--bad); }
+.hist-r { text-align: right; }
+.hist-v { font-size: 24rpx; color: var(--ink-3); }
+.hist-num { font-size: 36rpx; font-weight: 800; color: var(--ink); }
+.hist-bp { display: block; font-size: 22rpx; color: var(--ink-3); margin-top: 4rpx; }
+
+/* 状态 */
+.state { display: flex; flex-direction: column; align-items: center; padding: 56rpx; gap: 24rpx; }
+.spinner { width: 64rpx; height: 64rpx; border: 6rpx solid #f0f1f3; border-top-color: var(--brand); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.err { color: var(--bad); text-align: center; }
+.state-btn { width: 50%; height: 80rpx; line-height: 80rpx; }

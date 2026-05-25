@@ -1,0 +1,66 @@
+<!--pages/trends/trends.wxml — 趋势-->
+<scroll-view class="page" scroll-y type="list">
+
+  <!-- 指标切换 -->
+  <scroll-view scroll-x class="tabs reveal" enhanced show-scrollbar="{{false}}">
+    <view class="tab {{active === i ? 'on' : ''}}" wx:for="{{metrics}}" wx:key="*this"
+          data-i="{{i}}" bindtap="switchMetric">{{item}}</view>
+  </scroll-view>
+
+  <!-- 趋势图 -->
+  <view class="card chart-card reveal d1">
+    <view class="stat-row" wx:if="{{stat}}">
+      <view class="stat"><text class="stat-num">{{stat.avg}}</text><text class="stat-lb">平均 {{stat.unit}}</text></view>
+      <view class="stat"><text class="stat-num">{{stat.max}}</text><text class="stat-lb">最高</text></view>
+      <view class="stat"><text class="stat-num">{{stat.min}}</text><text class="stat-lb">最低</text></view>
+    </view>
+    <canvas type="2d" id="chart" class="chart"></canvas>
+  </view>
+
+  <!-- 长期 AI 分析 -->
+  <view class="section-head reveal d2"><view class="bar"></view><text class="t-section">长期趋势分析</text></view>
+
+  <view wx:if="{{aiLoading}}" class="card state">
+    <view class="spinner"></view><text class="t-body">AI 正在分析这段时间的变化…</text>
+  </view>
+  <view wx:elif="{{aiError}}" class="card state">
+    <text class="t-body err">{{aiError}}</text>
+    <button class="btn-ghost state-btn" bindtap="genTrend">重试</button>
+  </view>
+  <block wx:elif="{{trend}}">
+    <view class="card reveal">
+      <view class="trend-head">
+        <text class="trend-tag {{trend.trendClass}}">{{trend.trend}}</text>
+        <text class="t-body">{{trend.summary}}</text>
+      </view>
+      <view class="hl" wx:for="{{trend.highlights}}" wx:key="name">
+        <text class="hl-name">{{item.name}}</text>
+        <text class="hl-dir dir-{{item.dirClass}}">{{item.direction}}</text>
+        <text class="hl-note">{{item.note}}</text>
+      </view>
+    </view>
+    <view class="card reveal" wx:if="{{trend.longTermTips.length}}">
+      <text class="card-title">长期管理建议</text>
+      <view class="tip-item" wx:for="{{trend.longTermTips}}" wx:key="*this">
+        <text class="tip-dot">◆</text><text class="tip-text">{{item}}</text>
+      </view>
+    </view>
+  </block>
+  <button wx:else class="btn-primary gen-btn reveal d2" bindtap="genTrend">生成 AI 趋势分析</button>
+
+  <!-- 历史记录 -->
+  <view class="section-head reveal"><view class="bar"></view><text class="t-section">历史记录</text></view>
+  <view class="card hist-card reveal">
+    <view class="hist" wx:for="{{history}}" wx:key="date">
+      <view class="hist-l">
+        <text class="hist-date">{{item.date}}</text>
+        <text class="hist-alert" wx:if="{{item.alerts}}">⚠ {{item.alerts}} 项异常</text>
+      </view>
+      <view class="hist-r">
+        <text class="hist-v"><text class="hist-num">{{item.hr}}</text> bpm</text>
+        <text class="hist-bp">血压 {{item.bp}}</text>
+      </view>
+    </view>
+  </view>
+
+</scroll-view>

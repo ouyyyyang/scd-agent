@@ -1,0 +1,25 @@
+<!--pages/qa/qa.wxml — AI 问答-->
+<view class="page">
+  <scroll-view class="msgs" scroll-y type="list" scroll-into-view="{{toView}}" scroll-with-animation>
+    <view class="msg {{item.role}}" wx:for="{{messages}}" wx:key="index" id="m{{index}}">
+      <view class="avatar" wx:if="{{item.role === 'assistant'}}">♥</view>
+      <view class="bubble {{item.role}}">{{item.text}}</view>
+    </view>
+
+    <view class="msg assistant" wx:if="{{loading}}">
+      <view class="avatar">♥</view>
+      <view class="bubble assistant typing"><text class="d"></text><text class="d"></text><text class="d"></text></view>
+    </view>
+
+    <view class="suggest" wx:if="{{suggestions.length}}">
+      <view class="chip" wx:for="{{suggestions}}" wx:key="*this" data-q="{{item}}" bindtap="quick">{{item}}</view>
+    </view>
+    <view id="m{{messages.length}}" style="height:1rpx"></view>
+  </scroll-view>
+
+  <view class="inputbar">
+    <input class="ipt" placeholder="问问你的心脏健康…" value="{{input}}" confirm-type="send"
+           bindinput="onInput" bindconfirm="onSend" />
+    <view class="send {{input ? 'on' : ''}}" bindtap="onSend">发送</view>
+  </view>
+</view>

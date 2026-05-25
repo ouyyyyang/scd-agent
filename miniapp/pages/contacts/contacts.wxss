@@ -1,0 +1,49 @@
+/**pages/contacts/contacts.wxss**/
+.page { min-height: 100vh; box-sizing: border-box; padding: 28rpx 28rpx 60rpx; }
+
+/* 一键 120 */
+.sos120 {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 36rpx 40rpx; border-radius: var(--r-lg); color: #fff;
+  background: linear-gradient(135deg, #ff5d72, #b3122b); box-shadow: var(--sh-brand);
+}
+.sos120-num { font-size: 64rpx; font-weight: 800; letter-spacing: 2rpx; }
+.sos120-lb { display: block; font-size: 25rpx; opacity: 0.92; margin-top: 4rpx; }
+.sos120-ic { font-size: 60rpx; opacity: 0.9; }
+
+/* 联系人卡 */
+.empty { text-align: center; padding: 48rpx; }
+.contact {
+  display: flex; align-items: center; gap: 20rpx;
+  background: var(--card); border-radius: var(--r-md); padding: 24rpx 28rpx;
+  margin-bottom: 18rpx; box-shadow: var(--sh-sm);
+}
+.c-avatar {
+  flex: none; width: 84rpx; height: 84rpx; border-radius: 50%;
+  background: var(--brand-soft); color: var(--brand);
+  font-size: 38rpx; font-weight: 700; text-align: center; line-height: 84rpx;
+}
+.c-info { flex: 1; min-width: 0; }
+.c-name-row { display: flex; align-items: center; gap: 12rpx; }
+.c-name { font-size: 31rpx; font-weight: 700; }
+.c-default { font-size: 20rpx; color: var(--brand); background: var(--brand-soft); padding: 2rpx 14rpx; border-radius: 999rpx; }
+.c-meta { font-size: 24rpx; color: var(--ink-3); }
+.c-call {
+  flex: none; padding: 14rpx 30rpx; border-radius: 999rpx; font-size: 26rpx; font-weight: 600;
+  color: #fff; background: linear-gradient(135deg, #ff5d72, var(--brand-deep));
+}
+.c-del { flex: none; width: 48rpx; text-align: center; color: var(--ink-3); font-size: 30rpx; }
+
+.add-btn { margin: 30rpx 0 0; height: 96rpx; line-height: 96rpx; }
+.foot { display: block; margin-top: 22rpx; text-align: center; }
+
+/* 弹层 */
+.mask { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 10; display: flex; align-items: flex-end; }
+.sheet { width: 100%; box-sizing: border-box; background: #fff; border-radius: 36rpx 36rpx 0 0; padding: 40rpx 40rpx 56rpx; }
+.sheet-title { display: block; font-size: 34rpx; font-weight: 800; margin-bottom: 28rpx; }
+.frow { display: flex; align-items: center; min-height: 96rpx; border-top: 2rpx solid var(--line); }
+.frow:first-of-type { border-top: none; }
+.flabel { width: 120rpx; font-size: 29rpx; color: var(--ink-2); }
+.finput { flex: 1; font-size: 30rpx; }
+.sheet-btns { display: flex; gap: 20rpx; margin-top: 36rpx; }
+.half { flex: 1; height: 92rpx; line-height: 92rpx; }

@@ -1,0 +1,32 @@
+<!--pages/entry/entry.wxml — 录入体征-->
+<scroll-view class="page" scroll-y type="list">
+  <view class="intro reveal">
+    <text class="t-title">录入体征数据</text>
+    <text class="t-caption">填写后保存，会纳入仪表盘与 AI 评估。仅填你测到的项即可。</text>
+  </view>
+
+  <view class="card form reveal d1">
+    <view class="row">
+      <text class="label">日期</text>
+      <picker mode="date" value="{{date}}" bindchange="onDate" class="val picker">{{date}} ▾</picker>
+    </view>
+  </view>
+
+  <view class="section-head reveal d1"><view class="bar"></view><text class="t-section">心脏指标</text></view>
+  <view class="card form reveal d2">
+    <view class="row"><text class="label">静息心率</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.restingHr}}" data-field="restingHr" bindinput="onInput" /><text class="unit">bpm</text></view></view>
+    <view class="row"><text class="label">收缩压(高压)</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.systolic}}" data-field="systolic" bindinput="onInput" /><text class="unit">mmHg</text></view></view>
+    <view class="row"><text class="label">舒张压(低压)</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.diastolic}}" data-field="diastolic" bindinput="onInput" /><text class="unit">mmHg</text></view></view>
+    <view class="row"><text class="label">血氧</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.spo2}}" data-field="spo2" bindinput="onInput" /><text class="unit">%</text></view></view>
+    <view class="row"><text class="label">心率变异 HRV</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.hrv}}" data-field="hrv" bindinput="onInput" /><text class="unit">ms</text></view></view>
+    <view class="row"><text class="label">脉搏</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.pulse}}" data-field="pulse" bindinput="onInput" /><text class="unit">bpm</text></view></view>
+  </view>
+
+  <view class="section-head reveal d2"><view class="bar"></view><text class="t-section">生活方式</text></view>
+  <view class="card form reveal d3">
+    <view class="row"><text class="label">睡眠时长</text><view class="vbox"><input class="val" type="digit" placeholder="--" value="{{f.sleep}}" data-field="sleep" bindinput="onInput" /><text class="unit">h</text></view></view>
+    <view class="row"><text class="label">今日步数</text><view class="vbox"><input class="val" type="number" placeholder="--" value="{{f.steps}}" data-field="steps" bindinput="onInput" /><text class="unit">步</text></view></view>
+  </view>
+
+  <button class="btn-primary save-btn" bindtap="save">保存记录</button>
+</scroll-view>
