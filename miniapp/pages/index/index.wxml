@@ -63,7 +63,7 @@
   </block>
 
   <!-- 风险评估 -->
-  <view class="section-head reveal"><view class="bar"></view><text class="t-section">AI 风险评估</text></view>
+  <view class="section-head reveal"><view class="bar"></view><text class="t-section">风险分析</text></view>
 
   <view wx:if="{{loading}}" class="card state">
     <view class="spinner"></view>
@@ -111,6 +111,6 @@
   </block>
 
   <button class="btn-primary entry-btn" bindtap="goEntry">＋ 录入体征数据</button>
-  <view class="t-caption foot">本结果由 AI 生成，仅供参考，不能替代医生诊断。</view>
+  <view class="t-caption foot">本结果仅供参考，不能替代医生诊断。</view>
 
 </scroll-view>

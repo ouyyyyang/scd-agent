@@ -94,12 +94,12 @@
 .risk-ring {
   flex: none; width: 150rpx; height: 150rpx; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 46rpx; font-weight: 800; color: #fff;
+  font-size: 38rpx; font-weight: 800; color: #fff;
 }
 .risk-ring.low  { background: linear-gradient(135deg, #2fe39a, #16c47f); }
 .risk-ring.mid  { background: linear-gradient(135deg, #ffc04d, #ff9f0a); }
 .risk-ring.high { background: linear-gradient(135deg, #ff6f64, #ff453a); }
-.ring-pct { font-size: 24rpx; font-weight: 600; margin-left: 2rpx; }
+.ring-pct { font-size: 20rpx; font-weight: 600; margin-left: 2rpx; }
 .risk-meta { flex: 1; display: flex; flex-direction: column; gap: 10rpx; }
 .risk-lv { font-size: 38rpx; font-weight: 800; }
 .risk-lv.low { color: var(--good); } .risk-lv.mid { color: var(--warn); } .risk-lv.high { color: var(--bad); }

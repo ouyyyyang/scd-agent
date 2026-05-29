@@ -35,6 +35,76 @@ const TREND_PROMPT = `你是一名心血管内科医生助手。用户会提供�
 const QA_PROMPT = `你是用户的 AI 心脏健康助手。请基于下面提供的「用户健康档案」和「最近监测数据」，用通俗、简洁的中文回答用户关于自身心脏健康的问题。
 要求：回答简明（一般 3~6 句）；必要时提醒就医；不做确诊、不开具体处方；不要用 markdown 标记。`
 
+function chatUrl() {
+  const base = (config.baseUrl || '').replace(/\/+$/, '')
+  if (base.endsWith('/chat/completions')) return base
+  return base + '/chat/completions'
+}
+
+function cleanModelText(text) {
+  return String(text || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim()
+}
+
+function normalizeContent(content) {
+  if (Array.isArray(content)) {
+    return content.map((p) => (typeof p === 'string' ? p : (p.text || ''))).join('')
+  }
+  return content || ''
+}
+
+function pickMessageContent(data) {
+  const choice = data && data.choices && data.choices[0]
+  if (!choice) return ''
+  const msg = choice.message || {}
+  const content = msg.content != null ? msg.content : choice.text
+  return normalizeContent(content)
+}
+
+function pickDeltaContent(data) {
+  const choice = data && data.choices && data.choices[0]
+  if (!choice) return ''
+  const delta = choice.delta || {}
+  return normalizeContent(delta.content)
+}
+
+function arrayBufferToString(data) {
+  if (typeof data === 'string') return data
+  if (!data) return ''
+  if (typeof TextDecoder !== 'undefined') {
+    return new TextDecoder('utf-8').decode(data)
+  }
+  const bytes = new Uint8Array(data)
+  let binary = ''
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000))
+  }
+  try {
+    return decodeURIComponent(escape(binary))
+  } catch (e) {
+    return binary
+  }
+}
+
+function parseStreamText(data) {
+  const text = arrayBufferToString(data).trim()
+  if (!text) return ''
+  if (text[0] === '{') {
+    const json = JSON.parse(text)
+    return pickMessageContent(json) || pickDeltaContent(json)
+  }
+  let answer = ''
+  text.split(/\r?\n/).forEach((line) => {
+    line = line.trim()
+    if (!line || line[0] === ':') return
+    if (line.indexOf('data:') === 0) line = line.slice(5).trim()
+    if (!line || line === '[DONE]') return
+    try {
+      answer += pickDeltaContent(JSON.parse(line))
+    } catch (e) {}
+  })
+  return answer
+}
+
 /* ---------- 请求核心：返回模型输出的原始文本 ---------- */
 function callRaw(messages) {
   return new Promise((resolve, reject) => {
@@ -42,25 +112,37 @@ function callRaw(messages) {
       reject(new Error('还没配置 API Key，请打开 config.js 填写 apiKey'))
       return
     }
-    wx.request({
-      url: config.baseUrl,
+    let streamText = ''
+    const task = wx.request({
+      url: chatUrl(),
       method: 'POST',
       timeout: 60000,
+      enableChunked: true,
       header: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + config.apiKey },
-      data: { model: config.model, temperature: 0.4, messages },
+      data: { model: config.model, temperature: 0.4, messages, stream: true },
       success: (res) => {
         if (res.statusCode !== 200) {
           reject(new Error('接口返回 ' + res.statusCode + '：' + JSON.stringify(res.data)))
           return
         }
         try {
-          resolve(res.data.choices[0].message.content)
+          const content = cleanModelText(parseStreamText(streamText || res.data) || pickMessageContent(res.data))
+          if (!content) {
+            reject(new Error('模型返回为空：' + JSON.stringify(res.data)))
+            return
+          }
+          resolve(content)
         } catch (e) {
           reject(new Error('返回格式异常：' + e.message))
         }
       },
       fail: (err) => reject(new Error('请求失败：' + (err.errMsg || JSON.stringify(err)))),
     })
+    if (task && task.onChunkReceived) {
+      task.onChunkReceived((res) => {
+        streamText += arrayBufferToString(res.data)
+      })
+    }
   })
 }
 
